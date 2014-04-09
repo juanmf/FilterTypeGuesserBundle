@@ -19,9 +19,8 @@ Usage
     private function createFilterForm($formType)
     {
         $adapter = $this->get('dd_form.form_adapter');
-        $type = $this->getFormForDocument($this->getClassFromDocType($formType));
         $form = $adapter->adaptForm(
-            $type,
+            $formType,
             $this->generateUrl('document_search'),
             array('fieldToRemove1', 'fieldToRemove2')
         );
