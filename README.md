@@ -25,6 +25,7 @@ $ php composer.phar update docdigital/filter-type-guesser
 
 Usage
 =====
+In your Controller add a method like this, to create the FilterForm, out of the regular Entity's FormType.
 
 ```php
     /**
