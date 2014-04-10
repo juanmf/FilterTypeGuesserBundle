@@ -31,7 +31,7 @@ In your Controller add a method like this, to create the FilterForm, out of the 
     /**
      * Creates a Filter form to search for Entities.
      *
-     * @param AbstractType|string $formType The `generate:doctrine:form` generated Type of its FQCN.
+     * @param AbstractType|string $formType The `generate:doctrine:form` generated Type or its FQCN.
      *
      * @return \Symfony\Component\Form\Form The filter Form
      */
