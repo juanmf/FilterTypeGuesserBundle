@@ -10,6 +10,7 @@ fit in the given form.
 
 Instalation
 ===========
+
 Update your composer.json
 ```json
     "require": {
@@ -23,8 +24,27 @@ Then run the composer update command in your project root dir
 $ php composer.phar update docdigital/filter-type-guesser
 ```
 
+After composer finish, register the Bundel in app/appKernel.php
+```php
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = array(
+            ...
+            new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
+            new DocDigital\Bundle\FilterTypeGuesserBundle\DdFilterTypeGuesserBundle(),
+        );
+        ...
+        return $bundles;
+    }
+    ...
+}
+```
+
 Usage
 =====
+
 In your Controller add a method like this, to create the FilterForm, out of the regular Entity's FormType.
 
 ```php
