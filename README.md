@@ -46,3 +46,33 @@ In your Controller add a method like this, to create the FilterForm, out of the 
         return $form;
     }
 ```
+
+Then, the query building process is [lexik's](https://github.com/lexik/LexikFormFilterBundle/blob/master/Resources/doc/index.md#simple-example)
+```php
+    /**
+     * Collects filterForm filled params and builds a Query.
+     * 
+     * @Route("/find", name="document_search")
+     * @Method("POST")
+     * @template("DdDocumentBundle:Document:index.html.twig")
+     */
+    public function searchAction(Request $request)
+    {
+        // $docType = new FormType/FQCN() could do too.
+        $docType = 'FormType/FQCN';
+        $filterForm = $this->createFilterForm($docType);
+        $filterForm->handleRequest($request);
+        
+        $filterBuilder = $this->getDocRepo($docType)
+            ->createQueryBuilder('e');
+        $this->get('lexik_form_filter.query_builder_updater')
+            ->addFilterConditions($filterForm, $filterBuilder);
+        
+        $entities = $filterBuilder->getQuery()->execute();
+
+        return array(
+            'entities'   => $entities,
+            'filterForm' => $filterForm->createView(),
+        );
+    }
+```
