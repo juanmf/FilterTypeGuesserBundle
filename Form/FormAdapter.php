@@ -2,9 +2,9 @@
 
 namespace DocDigital\Bundle\FilterTypeGuesserBundle\Form;
 
-use \Symfony\Component\Form\AbstractType;
-use  \Symfony\Component\Form\Forms;
-use  \Symfony\Component\Form\Form;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\Form;
 
 /**
  * Description of FormAdapter
@@ -41,7 +41,9 @@ class FormAdapter
     ) {
         ($formType instanceof AbstractType) || $formType = new $formType();
         empty($typeSubmitOptions) 
-            && $typeSubmitOptions = array('label' => 'search', 'attr' => array('class' => 'btn'));
+            && $typeSubmitOptions = array(
+                    'label' => 'search', 'attr' => array('class' => 'btn', 'formnovalidate' => true)
+                );
         $extensions = $this->formRegistry->getExtensions();
 
         $formFactoryBuilder = Forms::createFormFactoryBuilder();
