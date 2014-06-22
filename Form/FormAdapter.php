@@ -52,8 +52,9 @@ class FormAdapter
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->create($formType, null, array(
-            'action' => $filterFormAction,
-            'method' => 'POST',
+            'required' => false,
+            'action'   => $filterFormAction,
+            'method'   => 'POST',
         ));
         $form->add('submit', 'submit', $typeSubmitOptions);
         $this->removeFieldsForFilter($form, $removeFields);
