@@ -39,7 +39,7 @@ class FormAdapter
     public function adaptForm(
         $formType, $filterFormAction, array $removeFields = array(), array $typeSubmitOptions = array()
     ) {
-        ($formType instanceof AbstractType) || $formType = new $formType();
+        ($formType instanceof AbstractType) || (class_exists($formType) && $formType = new $formType());
         empty($typeSubmitOptions) 
             && $typeSubmitOptions = array(
                     'label' => 'search', 'attr' => array('class' => 'btn', 'formnovalidate' => true)
