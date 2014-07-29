@@ -3,8 +3,10 @@
 namespace DocDigital\Bundle\FilterTypeGuesserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\Forms;
+use Symfony\Component\Form\FormRegistryInterface;
+use Symfony\Component\Form\FormTypeGuesserInterface;
 
 /**
  * Description of FormAdapter
@@ -13,11 +15,21 @@ use Symfony\Component\Form\Form;
  */
 class FormAdapter
 {
-
+    /**
+     * FormTypeGuesserInterface
+     * 
+     * @var FormTypeGuesserInterface
+     */
     private $formFiltertypeGuesser;
+    
+    /**
+     * FormRegistry
+     * 
+     * @var FormRegistryInterface
+     */
     private $formRegistry;
     
-    public function __construct($formRegistry, $formFiltertypeGuesser)
+    public function __construct(FormRegistryInterface $formRegistry, FormTypeGuesserInterface $formFiltertypeGuesser)
     {
         $this->formRegistry = $formRegistry;
         $this->formFiltertypeGuesser = $formFiltertypeGuesser;
@@ -52,9 +64,10 @@ class FormAdapter
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->create($formType, null, array(
-            'required' => false,
-            'action'   => $filterFormAction,
-            'method'   => 'POST',
+            'validation_groups' => false,
+            'required'          => false,
+            'action'            => $filterFormAction,
+            'method'                => 'POST',
         ));
         $form->add('submit', 'submit', $typeSubmitOptions);
         $this->removeFieldsForFilter($form, $removeFields);
