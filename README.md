@@ -96,3 +96,48 @@ Then, the query building process is [lexik's](https://github.com/lexik/LexikForm
         );
     }
 ```
+
+Events for changing the default filterTypes 
+===========================================
+
+New since commit 2689659a6109b512c786ab6472fcc7eaa1c72a7b
+
+```php
+class KernelEvents implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'kernel.request' => 'handleRequest',
+        );
+    }    
+        
+    public function handleRequest(GetResponseEvent $event)
+    {
+        /**
+         * Adds {@link FilterFormTypeGuesser} overrider to change default filter dates. 
+         */
+        $event->getDispatcher()->addListener(
+            FilterFormTypeGuesserEvents::FILTER_TYPE_GUESSER_LOADED, 
+            array(new TypeGuesserOverriderListener(), 'override')
+        );
+    }
+}  
+ 
+class TypeGuesserOverriderListener
+{
+   /**
+    * Overrides the default filter types associated with some Doctrine Guessed types.
+    * 
+    * This code replaces ugly 3 Selects Date by a Bootstrap Date Time picker implementation.
+    * 
+    * @param FilterFormTypeGuesserEvent $event the event containing the TypesMap.
+    * /
+   public function override(FilterFormTypeGuesserEvent $event)
+   {
+       $event->typesMap['date'] = 'dd_filter_date_range';
+       $event->typesMap['datetime'] = 'dd_filter_date_range';
+       $event->typesMap['time'] = 'dd_filter_date_range';
+   }
+}
+```
