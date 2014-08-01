@@ -13,6 +13,7 @@
         <service id="dd_form.form_adapter" class="%dd_form.form_adapter.class%">
                 <argument type="service" id="form.registry" />
                 <argument type="service" id="dd_form.type_guesser.filter" />
+                <argument type="service" id="event_dispatcher" />
         </service>
         <service id="dd_form.type_guesser.filter" class="%dd_form.type_guesser.filter.class%">
                 <argument type="service" id="doctrine" />

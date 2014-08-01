@@ -2,6 +2,7 @@
 
 namespace DocDigital\Bundle\FilterTypeGuesserBundle\Form;
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\Forms;
@@ -29,10 +30,13 @@ class FormAdapter
      */
     private $formRegistry;
     
-    public function __construct(FormRegistryInterface $formRegistry, FormTypeGuesserInterface $formFiltertypeGuesser)
-    {
+    public function __construct(
+        FormRegistryInterface $formRegistry, FormTypeGuesserInterface $formFiltertypeGuesser,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->formRegistry = $formRegistry;
         $this->formFiltertypeGuesser = $formFiltertypeGuesser;
+        $this->formFiltertypeGuesser->setEventDispatcher($eventDispatcher);
     }
     
     /**
