@@ -106,7 +106,9 @@ class FilterFormTypeGuesser extends DoctrineOrmTypeGuesser
 
     private function getTypeGuess($typeMapKey, $options)
     {
-        $typeName = isset($this->typesMap[$typeMapKey]) ? $this->typesMap[$typeMapKey] : "filter_$typeMapKey";
+        $typeName = isset($this->typesMap[$typeMapKey]) 
+                  ? $this->typesMap[$typeMapKey] 
+                  : $typeMapKey;
         return new TypeGuess($typeName, $options, Guess::VERY_HIGH_CONFIDENCE);
     }
     
